@@ -82,5 +82,17 @@ Both the Red Sea Urchin and Purple Sea Urchin size (in cm) is normally distribut
 
 ## Exploring Purple Urchin Count by Site and Year 
 
+```{r}
+purple_urchins <- urchins_clean %>%
+  filter(common_name == "Purple Urchin") %>%
+  mutate(date_new = ymd(date)) %>%
+  mutate(year_new = year(date_new)) %>%
+  mutate(site_full = case_when(
+    site %in% c("NAPL") ~ "Naples Reef",
+    site %in% c("AQUE") ~ "Arroyo Quemado Reef",
+    site %in% c("CARP") ~ "Carpinteria Reef",
+    site %in% c("MOHK") ~ "Mohawk Reef",
+    site %in% c("IVEE") ~ "Isla Vista Reef"))
+```
 
 
