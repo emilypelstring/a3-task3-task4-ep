@@ -58,20 +58,20 @@ Figure #1: **Size of Sea Urchins by Species.** Sea urchin size was recorded for 
 ## Descriptive Statistics Table
 
 ```{r}
-urchin_statistics <- urchins_clean %>%
-  group_by(common_name) %>%
-  summarize(mean_size_cm = round(mean(size, na.rm = TRUE), 1),
-            median_size_cm = round(median(size, na.rm = TRUE), 1),
-            sd_size_cm = round(sd(size, na.rm = TRUE), 1),
-            sample_size = n())
+urchin_statistics <- urchins_clean %>% #selecting the data
+  group_by(common_name) %>% #grouping by species/common name
+  summarize(mean_size_cm = round(mean(size, na.rm = TRUE), 1), #finding the mean, rounding to 1 decimal place
+            median_size_cm = round(median(size, na.rm = TRUE), 1), #finding the median, rounding to 1 decimal place
+            sd_size_cm = round(sd(size, na.rm = TRUE), 1), #finding the sd, rounding to 1 decimal place
+            sample_size = n()) #adding sample size 
 
-urchin_statistics %>%
-  kable(col.names = c("Common Name",
+urchin_statistics %>% #creating a table for the HTML doc 
+  kable(col.names = c("Common Name", #adding column names 
                       "Mean Size (cm)",
                       "Median Size (cm)",
                       "Standard Deviation (cm)",
                       "Sample Size")) %>%
-  kable_styling(full_width = FALSE)
+  kable_styling(full_width = FALSE) #styling preference 
 ```
 
 Figure #2: **Mean, Median, SD, and Sample Size of Sea Urchin Size by Species**: Sea urchin size was recorded (in cm) for two species, Red Sea Urchins (n = 27408) and Purple Sea Urchins (n = 31805). The mean Red Sea Urchin size is 6.8 cm $\pm$ 1.9 cm, while the mean Purple Sea Urchin size is 4.5 cm $\pm$ 1.2 cm. The median Red Sea Urchin size is 7.0 cm, and the median Purple Sea Urchin size is 4.5 cm.
@@ -79,5 +79,8 @@ Figure #2: **Mean, Median, SD, and Sample Size of Sea Urchin Size by Species**: 
 ### Summary of Data 
 
 Both the Red Sea Urchin and Purple Sea Urchin size (in cm) is normally distributed in the histogram graph. The Red Sea Urchin mean size is 2.3 cm higher than the mean size of Purple Sea Urchin. The mean size of the Red Sea Urchin is 33.8% higher than the mean size of the Purple Sea Urchin, while the standard deviations are 0.7 cm apart. In general, the size of Red Sea Urchins is higher than the size of Purple Sea Urchins in this sample population. 
+
+## Exploring Purple Urchin Count by Site and Year 
+
 
 
