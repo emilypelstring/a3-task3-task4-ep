@@ -1,0 +1,55 @@
+---
+title: "a3_task3_emily_pelstring"
+author: "Emily Pelstring"
+date: "10/27/2021"
+output: html_document
+---
+
+*Data:* Reed, D. 2020. SBC LTER: Reef: Long-term experiment: Kelp removal: Urchin size frequency distribution ver 20. Environmental Data Initiative. https://doi.org/10.6073/pasta/5a1e9ef03aa47bd2225c0bb98a02a63b. 
+
+Explanation: To be added later. 
+
+## Set Up 
+
+Read in the packages that are needed. 
+
+```{r setup, include=TRUE, message = FALSE, warning = FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(here)
+library(tidyverse)
+library(lubridate)
+library(janitor)
+```
+
+## Read in the Data 
+
+Reading in the urchin data. 
+
+```{r}
+urchins <- read_csv(here("data","urchins.csv"))
+```
+
+## Cleaning Up Data 
+
+Applying clean_names to the urchin data set. 
+
+```{r}
+urchins_clean <- urchins %>%
+  clean_names() #clean names is in the janitor package
+```
+
+## Data Visualization
+
+Here we utilize a histogram plot to visualize the different sizes of urchins, separated into species. 
+
+```{r}
+ggplot(data = urchins_clean,
+       aes(x = size)) + 
+  geom_histogram(bins = 10) +
+  facet_wrap(~ common_name) + 
+  theme_minimal() +
+  labs(x = "Size of Urchin (in cm)",
+       y = "number of Sea Urchins",
+       title = "Size of Sea Urchins (PELSTRING)")
+```
+Figure #1: *Size of Sea Urchins by Species.* Sea urchin size was recorded for two different species, the Red Sea Urchin and the Purple Sea Urchin. The number of sea urchins at each corresponding size is represented by the height of the histogram bars, with measured size of the sea urchin on x-axis in centimeters (cm). 
