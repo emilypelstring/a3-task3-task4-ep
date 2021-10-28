@@ -20,6 +20,7 @@ library(tidyverse)
 library(lubridate)
 library(janitor)
 library(kableExtra)
+library(ggthemes)
 ```
 
 ## Read in the Data 
@@ -48,7 +49,7 @@ ggplot(data = urchins_clean, #selecting the data
        aes(x = size)) + #making the x axis based on size 
   geom_histogram(bins = 10) + #changing bins from 30 to 10
   facet_wrap(~ common_name) + #separating out species 
-  theme_minimal() +
+  theme_solarized() +
   labs(x = "Size of Urchin (in cm)",
        y = "number of Sea Urchins",
        title = "Size of Sea Urchins (PELSTRING)")
@@ -83,16 +84,34 @@ Both the Red Sea Urchin and Purple Sea Urchin size (in cm) is normally distribut
 ## Exploring Purple Urchin Count by Site and Year 
 
 ```{r}
-purple_urchins <- urchins_clean %>%
-  filter(common_name == "Purple Urchin") %>%
-  mutate(date_new = ymd(date)) %>%
-  mutate(year_new = year(date_new)) %>%
-  mutate(site_full = case_when(
+purple_urchins <- urchins_clean %>% 
+  filter(common_name == "Purple Urchin") %>% #filtering for Purple Urchin
+  mutate(date_new = mdy(date)) %>% #converting date into a date category
+  mutate(year_new = year(date_new)) %>% #create a column with only year
+  mutate(site_full = case_when( #changing the site name acronyms into their full names
     site %in% c("NAPL") ~ "Naples Reef",
     site %in% c("AQUE") ~ "Arroyo Quemado Reef",
     site %in% c("CARP") ~ "Carpinteria Reef",
     site %in% c("MOHK") ~ "Mohawk Reef",
     site %in% c("IVEE") ~ "Isla Vista Reef"))
+
+total_urchin_observations <- purple_urchins %>% #grouping the data by site and year, asking R to count total sea urchins by those groups
+  group_by(site_full, year_new) %>%
+  count(common_name)
 ```
 
+## Visualization of Purple Urchins at Each Site By Year 
+
+```{r}
+ggplot(data = total_urchin_observations, #selecting the data
+       aes(x = year_new,#setting x-axis by year 
+           y = n)) + #setting y-axis as number of purple urchins 
+  geom_col() + #defining type of graph 
+  facet_wrap(~ site_full) + #separating out by site
+  theme_solarized() + #adding a theme
+  labs(x = "Year", #axes!!
+       y = "Number of Purple Urchins",
+       title = "Number of Purple Urchins by Site by Year (PELSTRING)") #title!!
+```
+Figure #3: **Number of Purple Sea Urchins by Site and Year:** Purple sea urchin size was recorded (in cm) at five different sites from 2008-2020. The x-axis separates the data by year, while the y-axis represents the number of sea urchins recorded at that site for the given year. 
 
