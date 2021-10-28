@@ -1,5 +1,5 @@
 ---
-title: "a3_task3_emily_pelstring"
+title: "Task 3 - Emily Pelstring "
 author: "Emily Pelstring"
 date: "10/27/2021"
 output: html_document
@@ -7,14 +7,14 @@ output: html_document
 
 **Data:** Reed, D. 2020. SBC LTER: Reef: Long-term experiment: Kelp removal: Urchin size frequency distribution ver 20. Environmental Data Initiative. https://doi.org/10.6073/pasta/5a1e9ef03aa47bd2225c0bb98a02a63b. 
 
-Explanation: To be added later. 
+This code helps to examine data that was collected by divers on red and purple sea urchins at sites of long-term kelp removal experimentation sites. In this code, we visualize the difference in sizes between red and purple sea urchins using histograms and statistical values, such as mean and standard deviation. We then examine purple sea urchins and their population size by site, then by year, via histogram. 
 
 ## Set Up 
 
 Read in the packages that are needed. 
 
 ```{r setup, include=TRUE, message = FALSE, warning = FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 library(here)
 library(tidyverse)
 library(lubridate)
@@ -83,6 +83,8 @@ Both the Red Sea Urchin and Purple Sea Urchin size (in cm) is normally distribut
 
 ## Exploring Purple Urchin Count by Site and Year 
 
+In this code we choose to look at only purple sea urchins, and divide the observations by both site and year. We also mutate the date so that it goes from a 'character' to a 'date' category in R. 
+
 ```{r}
 purple_urchins <- urchins_clean %>% 
   filter(common_name == "Purple Urchin") %>% #filtering for Purple Urchin
@@ -102,6 +104,8 @@ total_urchin_observations <- purple_urchins %>% #grouping the data by site and y
 
 ## Visualization of Purple Urchins at Each Site By Year 
 
+Visualization of purple sea urchins at each site by year using a histogram plot and facet_wrap by full name of site. 
+
 ```{r}
 ggplot(data = total_urchin_observations, #selecting the data
        aes(x = year_new,#setting x-axis by year 
@@ -115,3 +119,4 @@ ggplot(data = total_urchin_observations, #selecting the data
 ```
 Figure #3: **Number of Purple Sea Urchins by Site and Year:** Purple sea urchin size was recorded (in cm) at five different sites from 2008-2020. The x-axis separates the data by year, while the y-axis represents the number of sea urchins recorded at that site for the given year. 
 
+One factor that you would need to take into account to confirm that the changes in purple urchin population is accurate is the potential of the urchins to move out of the specified sampling areas (such as Mohawk Reef, Naples Reef) into other areas that are not being evaluated. This would make it appear as though urchin population is declining, when in reality there has just been a shift in purple urchin habitat preferences. This shift in habitat preferences could have been caused by increases in water temperatures, as they search to shift towards waters that fit their ideal climate. 

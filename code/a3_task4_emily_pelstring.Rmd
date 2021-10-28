@@ -1,0 +1,97 @@
+---
+title: "Task 2 - Emily Pelstring "
+author: "Emily Pelstring"
+date: "10/28/2021"
+output: html_document
+---
+
+**Data:** Reed, D. 2020. SBC LTER: Reef: Long-term experiment: Kelp removal: Urchin size frequency distribution ver 20. Environmental Data Initiative. https://doi.org/10.6073/pasta/5a1e9ef03aa47bd2225c0bb98a02a63b. 
+
+This code helps to examine data that was collected by divers on red and purple sea urchins at sites of long-term kelp removal experimentation sites. The diameter of the specimens was measured in centimeters to the nearest 0.5 cm. In this code, we visualize the degree of normal in the distribution of size of purple urchins in 2010 at the Naples Reef experimentation site using both a histogram and qq-plot. Finally, statistical parameters are summarized in the table, including mean, median, standard deviation, and sample size. 
+
+
+## Set Up
+
+Read in necessary packages. 
+
+```{r setup, include=TRUE, message = FALSE, warning = FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+
+library(here)
+library(tidyverse)
+library(lubridate)
+library(janitor)
+library(kableExtra)
+library(ggthemes)
+
+```
+
+## Read in Data
+
+Reading in the data. 
+
+```{r}
+urchins <- read_csv(here("data","urchins.csv"))
+```
+
+## Clean Names Conversion 
+
+Cleaning up the data set using clean_names().
+
+```{r}
+clean_urchins <- urchins %>%
+  clean_names() #cleaning up the data set 
+```
+
+## Data Wrangling 
+
+Selecting for data that was at the NAPL site during the year of 2010. 
+
+```{r}
+purple_urchins_naples_2010 <- clean_urchins %>% #selecting data
+  mutate(date_new = mdy(date)) %>% #converting dates to 'date'
+  mutate(year_new = year(date_new)) %>% #making a new column for year 
+  filter(site == "NAPL" &
+           year_new == 2010 &
+           common_name == "Purple Urchin") #filterng for NAPL AND 2010 and purple urchin
+```
+
+## Exploratory Histograms and QQ-plots 
+
+Figure 1 &2: 
+```{r}
+ggplot(data = purple_urchins_naples_2010, #selecting for data
+       aes(x = size)) + #counting size 
+  geom_histogram() + #type of graph
+  facet_wrap(~ treatment) #separating out annual and control 
+
+ggplot(data = purple_urchins_naples_2010, #selecting for data 
+       aes(sample = size)) + #counting size
+  geom_qq() +  #type of graph
+  facet_wrap(~ treatment) #separating out annual and control 
+```
+
+Both the histogram and the qq-plots show that the data collected from the NAPL site in 2010 (control and annual) is normally distributed. A clear straight line is created when the qq-plot is used, signally normality, and the histogram appears to show a distribution that resembles a bell curve. The "annual" histogram shows a slight skew to the left of the graph. 
+
+## Basic Summary Table 
+
+Figure 3: **Summary Statistics Table of Size Observations on Purple Sea Urchins in Naples Reef (2010).** This table presents the mean, median, standard deviation, and sample size of the purple sea urchin data that was collected from Naples Reef in 2010, including both the control and annual collections. 
+
+```{r}
+purple_urchin_stats <- purple_urchins_naples_2010 %>% #naming new data set 
+  group_by(treatment) %>% #grouping by annual and control 
+  summarize(mean_size_cm = round(mean(size, na.rm = TRUE), 1), #finding mean, rounding 1 decimal 
+            median_size_cm = round(median(size, na.rm = TRUE), 1), #finding median, rounding 1 decimal 
+            sd_size_cm = round(sd(size, na.rm = TRUE), 1), #finding sd, rounding 1 decimal 
+            sample_size = n()) #adding sample size 
+
+purple_urchin_stats %>%
+  kable(col.names = c("Treatment", #labeling column names 
+                      "Mean Size (cm)",
+                      "Median Size (cm)",
+                      "Standard Deviation (cm)",
+                      "Sample Size")) %>%
+  kable_styling(full_width = FALSE) #styling preference 
+  
+```
+
