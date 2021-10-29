@@ -226,7 +226,6 @@ library(ggthemes)</code></pre>
 </div>
 <div id="basic-summary-table" class="section level2">
 <h2>Basic Summary Table</h2>
-<p>Figure 3: <strong>Summary Statistics Table of Size Observations on Purple Sea Urchins in Naples Reef (2010).</strong> This table presents the mean, median, standard deviation, and sample size of the purple sea urchin data that was collected from Naples Reef in 2010, including both the control and annual collections.</p>
 <pre class="r"><code>purple_urchin_stats &lt;- purple_urchins_naples_2010 %&gt;% #naming new data set 
   group_by(treatment) %&gt;% #grouping by annual and control 
   summarize(mean_size_cm = round(mean(size, na.rm = TRUE), 1), #finding mean, rounding 1 decimal 
@@ -239,9 +238,13 @@ purple_urchin_stats %&gt;%
                       &quot;Mean Size (cm)&quot;,
                       &quot;Median Size (cm)&quot;,
                       &quot;Standard Deviation (cm)&quot;,
-                      &quot;Sample Size&quot;)) %&gt;%
+                      &quot;Sample Size&quot;),
+        caption = &quot;Figure 3: Summary Statistics Table of Size Observations on Purple Sea Urchins in Naples Reef (2010). This table presents the mean, median, standard deviation, and sample size of the purple sea urchin data that was collected from Naples Reef in 2010, including both the control and annual collections.&quot;) %&gt;%
   kable_styling(full_width = FALSE) #styling preference </code></pre>
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+Figure 3: Summary Statistics Table of Size Observations on Purple Sea Urchins in Naples Reef (2010). This table presents the mean, median, standard deviation, and sample size of the purple sea urchin data that was collected from Naples Reef in 2010, including both the control and annual collections.
+</caption>
 <thead>
 <tr>
 <th style="text-align:left;">

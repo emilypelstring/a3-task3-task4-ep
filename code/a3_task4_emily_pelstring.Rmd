@@ -75,8 +75,6 @@ Both the histogram and the qq-plots show that the data collected from the NAPL s
 
 ## Basic Summary Table 
 
-Figure 3: **Summary Statistics Table of Size Observations on Purple Sea Urchins in Naples Reef (2010).** This table presents the mean, median, standard deviation, and sample size of the purple sea urchin data that was collected from Naples Reef in 2010, including both the control and annual collections. 
-
 ```{r}
 purple_urchin_stats <- purple_urchins_naples_2010 %>% #naming new data set 
   group_by(treatment) %>% #grouping by annual and control 
@@ -90,7 +88,8 @@ purple_urchin_stats %>%
                       "Mean Size (cm)",
                       "Median Size (cm)",
                       "Standard Deviation (cm)",
-                      "Sample Size")) %>%
+                      "Sample Size"),
+        caption = "Figure 3: Summary Statistics Table of Size Observations on Purple Sea Urchins in Naples Reef (2010). This table presents the mean, median, standard deviation, and sample size of the purple sea urchin data that was collected from Naples Reef in 2010, including both the control and annual collections.") %>%
   kable_styling(full_width = FALSE) #styling preference 
   
 ```
