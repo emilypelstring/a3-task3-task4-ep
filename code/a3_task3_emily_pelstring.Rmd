@@ -71,11 +71,11 @@ urchin_statistics %>% #creating a table for the HTML doc
                       "Mean Size (cm)",
                       "Median Size (cm)",
                       "Standard Deviation (cm)",
-                      "Sample Size")) %>%
+                      "Sample Size"),
+        caption = "Figure #2: Mean, Median, SD, and Sample Size of Sea Urchin Size by Species: Sea urchin size was recorded (in cm) for two species, Red Sea Urchins (n = 27408) and Purple Sea Urchins (n = 31805). The mean Red Sea Urchin size is 6.8 cm +/- 1.9 cm, while the mean Purple Sea Urchin size is 4.5 cm +/- 1.2 cm. The median Red Sea Urchin size is 7.0 cm, and the median Purple Sea Urchin size is 4.5 cm.") %>%
   kable_styling(full_width = FALSE) #styling preference 
 ```
 
-Figure #2: **Mean, Median, SD, and Sample Size of Sea Urchin Size by Species**: Sea urchin size was recorded (in cm) for two species, Red Sea Urchins (n = 27408) and Purple Sea Urchins (n = 31805). The mean Red Sea Urchin size is 6.8 cm $\pm$ 1.9 cm, while the mean Purple Sea Urchin size is 4.5 cm $\pm$ 1.2 cm. The median Red Sea Urchin size is 7.0 cm, and the median Purple Sea Urchin size is 4.5 cm.
 
 ### Summary of Data 
 
